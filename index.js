@@ -13,8 +13,6 @@ function badge(tag, value, color, logo) {
     return url
 }
 
-var dir;
-
 module.exports = {
     book: {
         assets: './assets',
@@ -38,6 +36,7 @@ module.exports = {
             return page
         },
         'page': function(page) {
+            var dir = path.resolve('/', path.dirname(page.path))
             var conf = (key) =>
                 this.config.get(`pluginsConfig.${package}.` + key);
 
