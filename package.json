@@ -1,0 +1,24 @@
+{
+  "name": "gitbook-plugin-writeup-utils",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "sasdf",
+  "license": "MIT",
+  "engines": {
+    "gitbook": ">2.0.0"
+  },
+  "gitbook": {
+    "properties": {
+      "filePrefix": {
+        "type": "string",
+        "default": "https://github.com/user/project/blob/master",
+        "description": "URL prefix to the source code"
+      },
+      "repoPrefix": {
+        "type": "string",
+        "default": "https://github.com/user/project/blob/master",
+        "description": "URL prefix to the attachments"
+      }
+    }
+  }
+}
