@@ -40,6 +40,11 @@ module.exports = {
         }
     },
     blocks: {
+        'ignore': {
+            process: function(block) {
+                return ''
+            }
+        },
         'writeupHeader': {
             blocks: ['name', 'links', 'level', 'category', 'points', 'solves'],
             process: function(block) {
