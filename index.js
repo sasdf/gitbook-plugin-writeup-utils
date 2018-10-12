@@ -29,12 +29,59 @@ module.exports = {
 
             // Resolve source code links
             var prefix = conf('filePrefix')
-            dir = path.resolve('/', path.dirname(page.path))
+            var dir = path.resolve('/', path.dirname(page.path))
             page.content = page.content.replace(linkRegex, function(match, url) {
                 url = path.resolve(dir, url)
                 return prefix + url
             })
 
+            return page
+        },
+        'page': function(page) {
+            var conf = (key) =>
+                this.config.get(`pluginsConfig.${package}.` + key);
+
+
+            // Head
+            var repoPrefix = conf('repoPrefix')
+
+            var {name, category, points, solves} = page
+            if (name !== undefined && ( category !== undefined || solves !== undefined )) {
+                var res = `
+                <div class="wpHeaderContainer">
+                    <h1>${name}</h1>
+                    <div>
+                        <span>
+                            <a href="${repoPrefix + dir}"><img
+                                src="${badge('', 'Attachments', 'lightgrey', 'github')}"
+                                alt="Attachments"
+                            /></a>
+                        </span>
+                `
+                if (category !== undefined) { res += `
+                        <span>
+                            <img src="${badge(category, points, 'green')}"
+                                 alt="${category} - ${points}"
+                            />
+                        </span>
+                    `
+                }
+                if (solves !== undefined) { res += `
+                        <span>
+                            <img src="${badge('solves', solves, 'blue')}"
+                                 alt="${solves} solves"
+                            />
+                        </span>
+                    `
+                }
+                res += `
+                    </div>
+                </div>
+                `
+
+                page.content = res + page.content
+
+            }
 
             return page
         }
@@ -44,44 +91,8 @@ module.exports = {
             process: function(block) {
                 return ''
             }
-        },
-        'writeupHeader': {
-            blocks: ['name', 'links', 'level', 'category', 'points', 'solves'],
-            process: function(block) {
-                var conf = (key) =>
-                    this.config.get(`pluginsConfig.${package}.` + key);
-
-                var blocks = {}
-                for (let blk of block.blocks) {
-                    blocks[blk.name] = blk.body.trim()
-                }
-
-                var repoPrefix = conf('repoPrefix')
-
-                var res = `
-                <div class="wpHeaderContainer">
-                    <h1>${blocks.name}</h1>
-                        <span>
-                            <a href="${repoPrefix + dir}"><img
-                                src="${badge('', 'Attachments', 'lightgrey', 'github')}"
-                                alt="Attachments"
-                            /></a>
-                        </span>
-                        <span>
-                            <img src="${badge(blocks.category, blocks.points, 'green')}"
-                                 alt="${blocks.category} - ${blocks.points}"
-                            />
-                        </span>
-                        <span>
-                            <img src="${badge('solves', blocks.solves, 'blue')}"
-                                 alt="${blocks.solves} solves"
-                            />
-                        </span>
-                </div>
-                `
-                return res
-            }
         }
     },
-    filters: { },
+    filters: {
+    },
 }
