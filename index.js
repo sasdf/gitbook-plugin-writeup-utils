@@ -50,33 +50,30 @@ module.exports = {
                 <div class="wpHeaderContainer">
                     <h1>${name}</h1>
                     <div>
-                        <span>
-                            <a href="${repoPrefix + dir}"><img
-                                src="${badge('', 'Attachments', 'lightgrey', 'github')}"
-                                alt="Attachments"
-                            /></a>
-                        </span>
-                `
+                        <span><a
+                            href="${repoPrefix + dir}"><img
+                            src="${badge('', 'Attachments', 'lightgrey', 'github')}"
+                            alt="Attachments"
+                        /></a></span>
+                `.trim()
                 if (category !== undefined) { res += `
-                        <span>
-                            <img src="${badge(category, points, 'green')}"
-                                 alt="${category} - ${points}"
-                            />
-                        </span>
-                    `
+                        <span><img
+                            src="${badge(category, points, 'green')}"
+                            alt="${category} - ${points}"
+                        /></span>
+                    `.trim()
                 }
                 if (solves !== undefined) { res += `
-                        <span>
-                            <img src="${badge('solves', solves, 'blue')}"
-                                 alt="${solves} solves"
-                            />
-                        </span>
-                    `
+                        <span><img
+                            src="${badge('solves', solves, 'lightseagreen')}"
+                            alt="${solves} solves"
+                        /></span>
+                    `.trim()
                 }
                 res += `
                     </div>
                 </div>
-                `
+                `.trim()
 
                 page.content = res + page.content
 
