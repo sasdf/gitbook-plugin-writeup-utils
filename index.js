@@ -1,5 +1,6 @@
 var path = require('path');
 var linkRegex = /(?<=\[[^\]]*\]\()\[(.*)\](?=\))/g;
+var linkRegex2 = /(?<=\[[^\]]*\]\()\{(.*)\}(?=\))/g;
 
 var package = 'writeup-utils'
 
@@ -31,6 +32,12 @@ module.exports = {
             page.content = page.content.replace(linkRegex, function(match, url) {
                 url = path.resolve(dir, url)
                 return prefix + url
+            })
+
+            var rawprefix = conf('rawPrefix')
+            page.content = page.content.replace(linkRegex2, function(match, url) {
+                url = path.resolve(dir, url)
+                return rawprefix + url
             })
 
             return page
